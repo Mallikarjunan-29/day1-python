@@ -1,0 +1,6 @@
+name=input("Enter your hacker codename")
+objective = input("Enter your mission objective")
+time=input("When are you beginning your operation")
+print("Welcome,",name)
+print("Mission",objective,"at",time)
+print("Stay stealthy. Leave no digital footprints.")
