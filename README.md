@@ -15,3 +15,17 @@ Stay stealthy. Leave no digital footprints.
 - Python variables
 - Input/output
 - String formatting
+  
+## Second project
+Determine clearance level based on input
+
+What it does
+Takes the name and clearance level as input and produces an output for access
+
+Sample output
+Lets determine your clearance:
+
+Enter your name: Mallikarjunan Enter your clearance level: 1 - Secret 2- Confidential 3-Others 3 Access denied
+
+What i learnt
+if , else, elif condition
