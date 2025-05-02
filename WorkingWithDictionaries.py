@@ -1,4 +1,5 @@
 import time
+import os
 login_creds={
     "admin":"admin123",
     "user":"user123",
@@ -36,39 +37,74 @@ counter =0
 #         else:
 #             login_input(count)
 # login_input(counter)
-failed_login_attempts=[]
-def login():
+# login_attempts=[]
+def log_write(login_attempt):
+    try:
+        file_path="C:\\Users\\ramya\\OneDrive\\Documents\\Logs\\"
+        file_full_path=file_path+"logs.txt"
+        if os.path.exists(file_full_path):
+            with open(f"{file_path}logs.txt", "a") as f:
+                f.writelines("\n"+login_attempt)
 
-    counter=0
-    while counter<3:
-        uname=input("\n Enter username:")
-        pwd=input("\n Enter password:")
-        if uname in login_creds:
-            if pwd==login_creds[uname]:
-                print("\n Login Successful")
-                break
+        else:
+            with open(f"{file_path}logs.txt", "x") as f:
+                f.writelines("\n"+login_attempt)
+    except FileExistsError:
+        print("File already exists")
+    except FileNotFoundError:
+        print("File not found")
+    finally:
+        print("script executed")
+
+def login():
+    try:
+        counter=0
+        while counter<3:
+
+            uname=input("\n Enter username:")
+            pwd=input("\n Enter password:")
+            if uname in login_creds:
+                if pwd==login_creds[uname]:
+                    # login_attempts.append(uname +"- Success-"+str(time.strftime('%Y-%m-%d-%H:%M:%S')))
+                    log_write(uname +"- Success-"+str(time.strftime('%Y-%m-%d-%H:%M:%S')))
+                    print("\n Login Successful")
+                    break
+                else:
+                    counter+=1
+                    if counter ==3:
+                        # login_attempts.append(uname+"- failed -" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                        log_write(uname + "- failed-" + str(time.strftime('%Y-%m-%d-%H:%M:%S')))
+                        print("\nLogin failed")
+                    else:
+                        # login_attempts.append(uname+"- failed -" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                        log_write(uname + "- failed-" + str(time.strftime('%Y-%m-%d-%H:%M:%S')))
+                        print("\n Enter correct username and password ")
             else:
                 counter+=1
-                if counter ==3:
-                    failed_login_attempts.append(uname+"-" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                if counter == 3:
+                    # login_attempts.append(uname+"- failed -" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                    log_write(uname + "- failed-" + str(time.strftime('%Y-%m-%d-%H:%M:%S')))
                     print("\nLogin failed")
                 else:
-                    failed_login_attempts.append(uname+"-" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                    # login_attempts.append(uname+"- failed -" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
+                    log_write(uname + "- failed-" + str(time.strftime('%Y-%m-%d-%H:%M:%S')))
                     print("\n Enter correct username and password ")
-        else:
-            counter+=1
-            if counter == 3:
-                failed_login_attempts.append(uname+"-" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
-                print("\nLogin failed")
-            else:
-                failed_login_attempts.append(uname+"-" + str(time.strftime("%Y-%m-%d-%H:%M:%S")))
-                print("\n Enter correct username and password ")
+    except:
+        print("Exception")
 
+def log_read():
+    try:
+        file_path = "C:\\Users\\ramya\\OneDrive\\Documents\\Logs\\"
+        file_full_path = file_path + "logs.txt"
+        if os.path.exists(file_full_path):
+            with open(f"{file_path}logs.txt", "r") as f:
+                logs = f.readlines()
+                for lines in logs:
+                    if "failed" in lines.lower():
+                        print(lines)
+    except FileNotFoundError:
+        print("File not found")
+    except FileExistsError:
+        print("File already exists")
 login()
-print(f"\n{failed_login_attempts}")
-
-
-
-
-
-
+log_read()
